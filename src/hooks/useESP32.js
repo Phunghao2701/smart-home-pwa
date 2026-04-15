@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import mqtt from 'mqtt';
 
-export const useESP32 = (brokerUrl = "wss://broker.emqx.io:8084/mqtt") => {
+export const useESP32 = (brokerUrl = "ws://broker.emqx.io:8084/mqtt") => {
   const [data, setData] = useState({
     temperature: 0,
     connected: false,
