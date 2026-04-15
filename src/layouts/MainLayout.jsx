@@ -7,7 +7,7 @@ import { Menu, X } from "lucide-react";
 
 export default function MainLayout() {
   const { data, isConnected, sendCommand } = useESP32(
-    "ws://broker.emqx.io:8083/mqtt",
+    "wss://broker.emqx.io:8084/mqtt",
   );
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
