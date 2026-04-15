@@ -10,17 +10,7 @@
   </head>
   <body>
     <div id="root"></div>
-    <script>
-      // Bẻ gãy toàn bộ PWA Service Worker cũ đang lưu cache độc!
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then(function(registrations) {
-          for(let registration of registrations) {
-            registration.unregister();
-            console.log('Đã gỡ bỏ Service Worker cũ!');
-          }
-        });
-      }
-    </script>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
