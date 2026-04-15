@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import mqtt from 'mqtt';
 
-export const useESP32 = (brokerUrl = "ws://broker.emqx.io:8084/mqtt") => {
+export const useESP32 = (brokerUrl = "wss://broker.emqx.io:8084/mqtt") => {
   const [data, setData] = useState({
     temperature: 0,
     connected: false,
@@ -18,8 +18,19 @@ export const useESP32 = (brokerUrl = "ws://broker.emqx.io:8084/mqtt") => {
 
   useEffect(() => {
     console.log(`Đang kết nối tới MQTT Broker: ${brokerUrl}...`);
-    // Kết nối MQTT qua WebSocket (port 8083 mặc định hoặc theo URL bạn truyền vào)
-    const mqttClient = mqtt.connect(brokerUrl);
+    // Cấp phát ClientID ngẫu nhiên để tránh đụng độ trên Public Broker, và cấu hình các thông số
+    const options = {
+      clientId: 'smart_home_pwa_' + Math.random().toString(16).substr(2, 8),
+      keepalive: 60,
+      protocolId: 'MQTT',
+      protocolVersion: 4,
+      clean: true,
+      reconnectPeriod: 1000,
+      connectTimeout: 30 * 1000,
+    };
+    
+    // Kết nối MQTT qua secure WebSocket (wss)
+    const mqttClient = mqtt.connect(brokerUrl, options);
 
     mqttClient.on('connect', () => {
       console.log('Đã kết nối MQTT Broker!');
