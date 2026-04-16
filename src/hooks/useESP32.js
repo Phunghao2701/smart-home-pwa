@@ -38,6 +38,9 @@ export const useESP32 = (brokerUrl = "wss://broker.emqx.io:8084/mqtt") => {
       // Subscribe vào Topic của ESP32 để nhận dữ liệu
       mqttClient.subscribe('smarthome/esp32/status');
       mqttClient.subscribe('smarthome/esp32/log'); // Thêm subscribe log
+      
+      // Yêu cầu ESP32 gửi lại trạng thái ngay khi web vừa kết nối (reload)
+      mqttClient.publish('smarthome/esp32/control', JSON.stringify({ request_status: true }));
     });
 
     mqttClient.on('message', (topic, message) => {
